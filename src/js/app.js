@@ -1,5 +1,5 @@
 // some globals.
-var _APP_         = 'yourappname'
+var _APP_         = 'dogsapp'
   , _CONTROLLERS_ = _APP_ + '.controllers'
   , _DIRECTIVES_  = _APP_ + '.directives'
   , _FILTERS_     = _APP_ + '.filters'
@@ -26,7 +26,10 @@ angular.module(_APP_, [
   // to your Gruntfile's bower components if you want
   // to use it!
   'ngTouch',
-  'ngRoute'
+  'ngRoute',
+  'btford.phonegap.geolocation',
+  'btford.phonegap.ready',
+  'leaflet-directive'
 
 
 ]);

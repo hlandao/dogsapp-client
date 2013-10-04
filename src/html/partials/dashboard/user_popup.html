@@ -1,0 +1,22 @@
+<div class="inner">
+    <div class="dog-header">
+        <div class="dog-thumbnail-wrapper">
+            <img ng-src="{{userPopup.dog.thumbnail}}">
+        </div>
+        <div class="dog-name">
+            {{userPopup.dog.name}}
+            <small ng-show="userPopup.name"> ({{userPopup.name}})</small>
+        </div>
+    </div>
+    <div class="chat">
+        <div class="messages-wrapper">
+            <div ng-repeat="message in history" class="message" ng-class="{'mine' : (userToChat._id === message.to), 'his' : (userToChat._id === message.from)}">
+                <span>{{message.message}}</span>
+            </div>
+        </div>
+        <form ng-submit="sendIM(message)" class="input-wrapper">
+            <input type="text" class="topcoat-text-input" ng-model="message" placeholder="Send {{ userPopup.dog.name }} a message..." value="">
+            <button class="topcoat-button--cta" type="submit"> Send </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item center full">
+        <h1 class="topcoat-navigation-bar__title">DogsApp</h1>
+    </div>
+</div>
+<div class="content">
+    <div class="area">
+        <header>
+            <h2 class="title">Create Account</h2>
+        </header>
+        <section class="centerized">
+            <input type="text" class="topcoat-text-input" placeholder="Email" value="" ng-model="newAccount.email">
+            <br>
+            <br>
+            <input type="password" class="topcoat-text-input" placeholder="Password" value=""  ng-model="newAccount.password">
+            <br>
+            <br>
+            <input type="text" class="topcoat-text-input" placeholder="Your Name"  ng-model="newAccount.name">
+            <br>
+            <br>
+            <input type="text" class="topcoat-text-input" placeholder="Dog Name"  ng-model="newAccount.dog.name">
+            <br>
+            <br>
+            <button class="topcoat-button" ng-click="takePicture()">Choose Dog Picture</button>
+            <br>
+            <br>
+            <span class="topcoat-notification" ng-show="error">{{error}}</span>
+            <br>
+            <br>
+            <button class="topcoat-button--cta" ng-click="createAccount($event)">Create Account</button>
+            <br>
+            <a href="#/login">Already have an account ? Click here</a>
+        </section>
+    </div>
+</div>

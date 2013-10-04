@@ -6,7 +6,8 @@
 
 module.exports = function(grunt) {
 
-  var _APP_NAME_ = "CHANGE ME IN Gruntfile.js";
+  var _APP_NAME_ = "Dogs App" +
+      "";
 
   // initial grunt configuration
   grunt.initConfig({
@@ -24,8 +25,9 @@ module.exports = function(grunt) {
         vendor: [
 
           // Add additional Bower components here
-          '<%= bowerDir %>/bootstrap/dist/css/bootstrap.css',
-          '<%= bowerDir %>/font-awesome/css/font-awesome.css'
+          //'<%= bowerDir %>/bootstrap/dist/css/bootstrap.css',
+          //'<%= bowerDir %>/font-awesome/css/font-awesome.css',
+          '<%= bowerDir %>/topcoat/css/topcoat-mobile-light.css'
 
         ],
         // shouldn't need to touch this
@@ -37,9 +39,18 @@ module.exports = function(grunt) {
       js: {
         vendor: [
           // add any Bower components here.
+          '<%= bowerDir %>/jquery/jquery.js',
           '<%= bowerDir %>/angular/angular.js',
           '<%= bowerDir %>/angular-route/angular-route.js',
-          '<%= bowerDir %>/angular-touch/angular-touch.js'
+          '<%= bowerDir %>/angular-touch/angular-touch.js',
+          '<%= bowerDir %>/angular-phonegap-geolocation/geolocation.js',
+          '<%= bowerDir %>/angular-phonegap-ready/ready.js',
+          '<%= bowerDir %>/angular-leaflet/src/angular-leaflet-directive.js',
+          '<%= bowerDir %>/underscore/underscore.js'
+
+
+//          '<%= bowerDir %>/angular-google-maps/src/angular-google-maps.js'
+
         ],
         // shouldn't need to touch this.
         src: [

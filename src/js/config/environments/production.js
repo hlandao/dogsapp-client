@@ -7,3 +7,5 @@
  * var _BASE_API_URL = 'http://production.example.org/api/v1';
  *
  */
+
+var _BASE_API_URL = 'http://dogsapp-dev.herokuapp.com';

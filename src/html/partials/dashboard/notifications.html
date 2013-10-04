@@ -1,0 +1,18 @@
+<div class="inner">
+    <div class="topcoat-list">
+        <h3 class="topcoat-list__header">Notifications</h3>
+        <ul class="thumbnail-list topcoat-list__container">
+            <li class="topcoat-list__item" ng-repeat="noti in notifications"   ng-click="setUserPopup(noti[0].from, $event)">
+                <div class="thumbnail">
+                    <img ng-src="{{noti[0].from.dog.thumbnail || './img/doggy64.png'}}">
+                </div>
+
+                <div class="title">
+                    <div class="from">{{noti[0].from.dog.name}}</div>
+                    <div class="sub-title">{{noti.length}} new messages</div>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</div>

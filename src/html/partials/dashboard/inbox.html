@@ -1,0 +1,32 @@
+<div class="topcoat-navigation-bar header" ng-include="'./html/partials/dashboard/header.html'"></div>
+
+<div class="content inbox-wrapper" ng-init="initInboxView()">
+    <div class="topcoat-list">
+        <h3 class="topcoat-list__header">Inbox</h3>
+        <ul class="thumbnail-list topcoat-list__container">
+            <li class="topcoat-list__item" ng-repeat="user in inbox"   ng-click="setUserPopup(user)">
+                <div class="thumbnail">
+                    <img ng-src="{{user.dog.thumbnail || './img/doggy64.png'}}">
+                </div>
+
+                <div class="title">
+                    <div class="from">{{user.dog.name}}</div>
+                </div>
+
+           </li>
+        </ul>
+    </div>
+
+    <div ng-if="popups.user" >
+        <div class="user-popup-wrapper" ng-controller="IMController" ng-include="'./html/partials/dashboard/user_popup.html'"></div>
+    </div>
+    <div ng-if="popups.notifications">
+        <div class="notifications-wrapper" ng-include="'./html/partials/dashboard/notifications.html'"></div>
+    </div>
+
+
+</div>
+
+
+<div class="footer"  ng-include="'./html/partials/dashboard/footer.html'"></div>
+

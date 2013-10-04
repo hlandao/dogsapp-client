@@ -7,3 +7,6 @@
  * var _BASE_API_URL = 'http://dev.example.org/api/v1';
  *
  */
+
+var _BASE_API_URL = 'http://localhost:3000';
+//var _BASE_API_URL = 'http://dogsapp-dev.herokuapp.com';

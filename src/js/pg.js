@@ -14,12 +14,10 @@ var pg = {
   bindEvents: function() {
 
     if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
-
       // bind deviceready callback for phonegap devices
       document.addEventListener('deviceready', this.onDeviceReady, true);
 
     } else {
-
       // running on desktop, just call device ready immediately
       this.onDeviceReady();
 

@@ -169,7 +169,8 @@ StaticServlet.prototype.sendFile_ = function(req, res, path) {
   var file = fs.createReadStream(path);
   res.writeHead(200, {
     'Content-Type': StaticServlet.
-      MimeMap[path.split('.').pop()] || 'text/plain'
+      MimeMap[path.split('.').pop()] || 'text/plain',
+    'Access-Control-Allow-Origin' : '*'
   });
   if (req.method === 'HEAD') {
     res.end();

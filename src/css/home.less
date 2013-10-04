@@ -3,3 +3,187 @@
 h1 {
   color: @primary;
 }
+
+html,body{
+  height: 100%;
+}
+
+#container{
+  height: 100%;
+  #wrapper{
+    height: 100%;
+    display: -webkit-box;
+    -webkit-box-orient:vertical;
+    .header{
+      .back-button{
+        position : absolute;
+        left:0;
+        top:10px;
+      }
+      .notifications-wrapper{
+        position : absolute;
+        right:0;
+        top:0px;
+      }
+    }
+    .content{
+      height: 100%;
+      -webkit-box-flex:1;
+      position: relative;
+      .area{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index:100;
+      }
+
+      .user-popup-wrapper{
+        position: absolute;
+        bottom:0;
+        width:100%;
+        height:100%;
+        background: #e2e8ff;
+        z-index:110;
+        opacity:0.9;
+        > .inner{
+          width:100%;
+          height:100%;
+          display: -webkit-box;
+          -webkit-box-orient:vertical;
+        }
+        .dog-header{
+          height: 110px;
+          padding-top:10px;
+          .dog-thumbnail-wrapper{
+            width:64px;
+            height: 64px;
+            background: url(../img/doggy64.png);
+            background-size: 100% 100%;
+            border-radius: 320px;
+            border:2px solid white;
+            overflow:hidden;
+            margin:0px auto;
+            img{
+              width:64px;
+              height: 64px;
+              border-radius: 20px;
+            }
+          }
+          .dog-name{
+            text-align: center;
+            font-weight: bold;
+            small{
+              color : #888;
+            }
+          }
+        }
+
+        .chat{
+          display: -webkit-box;
+          -webkit-box-orient:vertical;
+          -webkit-box-flex:1;
+          background: white;
+          .messages-wrapper{
+            -webkit-box-flex:1;
+            .message{
+              box-sizing: border-box;
+               width:100%;
+              padding: 12px 15px;
+              &.mine{
+                text-align:right;
+
+                span{
+                  padding:7px 10px;
+                  background : rgba(189, 247, 189, 0.29);
+                }
+              }
+              &.his{
+                text-align:left;
+                span{
+                  padding:4px;
+                  background : rgba(127, 214, 255, 0.15);
+                }
+              }
+
+            }
+          }
+          .input-wrapper{
+            height: 55px;
+            padding: 13px;
+            display:-webkit-box;
+            -webkit-box-orient:horizontal;
+            input{
+              -webkit-box-flex:1;
+              margin-right: 15px;
+              display: block;
+            }
+            button{
+              width:85px;
+            }
+          }
+        }
+      }
+
+
+
+      .notifications-wrapper{
+        position: absolute;
+        bottom:0;
+        width:100%;
+        height:100%;
+        background: #e2e8ff;
+        z-index:110;
+        opacity:0.9;
+        > .inner{
+          width:100%;
+          height:100%;
+          display: -webkit-box;
+          -webkit-box-orient:vertical;
+        }
+
+      }
+
+      ul.thumbnail-list{
+        li{
+          display: -webkit-box;
+          -webkit-box-orient:horizontal;
+          div{
+            height: 100%;
+          }
+          div.thumbnail{
+            width:64px;
+            border-radius: 32px;
+            border:2px solid white;
+            margin-right : 15px;
+            img{
+              width:64px;
+              height: 64px;
+              border-radius: 32px;
+            }
+          }
+          div.title{
+            padding-top:15px;
+            .from{
+              font-weight: bold;
+            }
+            .sub-title{
+              color:red;
+            }
+          }
+        }
+      }
+
+
+    }
+
+    .footer{
+      width:100%;
+      padding:0;
+      margin:0;
+    }
+  }
+}
+
+

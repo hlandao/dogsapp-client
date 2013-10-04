@@ -7,6 +7,10 @@
     "angular-route": "~1.2.0-rc.1",
     "angular-touch": "~1.2.0-rc.1",
     "bootstrap": "~3.0.0",
-    "font-awesome": "~3.2.1"
+    "font-awesome": "~3.2.1",
+    "topcoat": "~0.7.5",
+    "angular-phonegap-geolocation": "~0.0.1",
+    "angular-phonegap-ready": "~0.0.1",
+    "underscore": "~1.5.2"
   }
 }
