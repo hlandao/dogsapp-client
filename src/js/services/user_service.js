@@ -1,4 +1,4 @@
-angular.module(_SERVICES_).factory('User', function(Storage, $q, $log) {
+angular.module(_SERVICES_).factory('User', ['Storage', '$q', '$log','$rootScope', function(Storage, $q, $log, $rootScope) {
     var storageKey = 'user',
         initDefer = $q.defer(),
         user;
@@ -28,7 +28,12 @@ angular.module(_SERVICES_).factory('User', function(Storage, $q, $log) {
      */
     var set = function(_user, done){
         user = _user;
-        store(done);
+        store(function(){
+            $rootScope.safeApply(function(){
+                done && done();
+            });
+
+        });
     };
 
 
@@ -54,4 +59,4 @@ angular.module(_SERVICES_).factory('User', function(Storage, $q, $log) {
             return user;
         }
     }
-});
+}]);

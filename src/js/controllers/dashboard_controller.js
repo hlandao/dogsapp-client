@@ -1,7 +1,7 @@
 
 
 
-angular.module(_CONTROLLERS_).controller('DashboardController', function($scope, Account, $location, geolocation, $timeout) {
+angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Account', '$location', 'geolocation', '$timeout', function($scope, Account, $location, geolocation, $timeout) {
     var _account = Account.account();
     var updateLocationTimeout;
     var isCentered;
@@ -48,13 +48,11 @@ angular.module(_CONTROLLERS_).controller('DashboardController', function($scope,
         geolocation.getCurrentPosition( function GCPSuccess(locationData){
             done(null, locationData);
         }, function GCPError(err){
+            console.error(err);
             done(err);
         }, options);
     };
 
-    if(!_account.user){
-        $location.path('/');
-    }
 
 
     angular.extend($scope, {
@@ -64,13 +62,22 @@ angular.module(_CONTROLLERS_).controller('DashboardController', function($scope,
     });
 
 
-
-
+    /**
+     * Leaflet defaults - it is required to set these defaults in order to make it work;
+     */
     $scope.center = {lat : 0,lng : 0};
     $scope.markers = {};
 
 
+    /**
+     * init both map view and inbox view (maybe we should move this logic into a 'parent' controller because
+     * we always want to transmit our position to the server
+     */
     var init = function(){
+        if(!_account.user){
+            $location.path('/');
+        }
+
         getLocation(null, function(err, locationData){
             centerMe(locationData.coords);
         });
@@ -109,12 +116,17 @@ angular.module(_CONTROLLERS_).controller('DashboardController', function($scope,
 
 
     /**
-     * update user location and intitates the timeout of updating user location;
+     * updates user location and initiates a peridoed location update
      */
 
     var updateLocation = function(timeout){
         getLocation(null, function(err, locationData){
+
+            // if map is centered, update the center
             if(isCentered) centerMe(locationData.coords);
+            // if not, just update my cursor
+            else updateMyMarkerInTheMap(locationData.coords);
+
             Account.updateLocation(locationData.coords, function(err, response){
                 if(response && response.aroundMe) updateUsersAroundMe(response.aroundMe);
                 if(response) processNotifications(response.notifications);
@@ -170,32 +182,56 @@ angular.module(_CONTROLLERS_).controller('DashboardController', function($scope,
     };
 
 
+    /**
+     * Event listener for map markers clicks
+     */
     $scope.$on('leafletDirectiveMarkersClick', function(event,markerId){
-        console.log('leafletDirectiveMarkersClick');
         var marker = $scope.markers[markerId];
-        $scope.popups.user = marker.user;
+        $scope.setUserPopup(marker.user);
     });
 
+    /**
+     * if map has been dragged - it means we're not centered anymore
+     */
+    $scope.$on('leafletDirectiveMap.drag', function(event){
+        isCentered = false;
+    });
+
+    /**
+     * open user's popup
+     * @param user
+     * @param e
+     */
     $scope.setUserPopup = function(user, e){
-        console.log('setUserPopup');
         if(e){
             e.stopPropagation();
             e.preventDefault();
         }
-        $scope.popups.user = user;
+        $scope.userPopup = user;
+        $scope.popups.user = true;
         $scope.popups.notifications = false;
     };
 
 
+    /**
+     * closes the a popup
+     */
     $scope.closeUserPopup = function(){
         $scope.popups.user = null;
     };
 
 
+    /**
+     * initiates the map view
+     */
     $scope.initMapView = function(){
         $scope.uiState = "map";
     };
 
+
+    /**
+     * initiates the inbox view
+     */
     $scope.initInboxView = function(){
         $scope.uiState = "inbox";
         Account.inbox(function(err, inbox){
@@ -207,14 +243,22 @@ angular.module(_CONTROLLERS_).controller('DashboardController', function($scope,
         })
     };
 
+
+    /**
+     * switch to view instead of using a-href tag
+     * @param view
+     */
     $scope.switchTo = function(view){
       var path = $location.path();
       if(path && path.indexOf(view) > -1) return;
         $location.path(view);
     };
 
+
+    /**
+     * show or hide notifications popup
+     */
     $scope.toggleNotifications = function(){
-        console.log('toggleNotifications');
         $scope.popups.notifications = !$scope.popups.notifications;
         if($scope.popups.notifications){
             $scope.popups.user = null;
@@ -224,4 +268,4 @@ angular.module(_CONTROLLERS_).controller('DashboardController', function($scope,
     init();
     updateLocation(10000);
 
-});
+}]);

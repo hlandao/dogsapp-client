@@ -39,7 +39,16 @@ angular.module(_APP_).run([
   function($rootScope) {
 
     // intial run code here
-
+      $rootScope.safeApply = function(fn) {
+          var phase = this.$root.$$phase;
+          if(phase == '$apply' || phase == '$digest') {
+              if(fn && (typeof(fn) === 'function')) {
+                  fn();
+              }
+          } else {
+              this.$apply(fn);
+          }
+      };
   }
 ]);
 

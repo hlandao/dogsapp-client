@@ -23,6 +23,10 @@
             <br>
             <button class="topcoat-button" ng-click="takePicture()">Choose Dog Picture</button>
             <br>
+            <img ng-show="newAccountDogThumbnail" ng-src="{{newAccountDogThumbnail}}" class="dog-thumbnail">
+            <img ng-show="!newAccountDogThumbnail" src="img/doggy64.png" class="dog-thumbnail">
+
+            <br>
             <br>
             <span class="topcoat-notification" ng-show="error">{{error}}</span>
             <br>

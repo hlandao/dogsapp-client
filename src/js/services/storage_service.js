@@ -1,10 +1,12 @@
-angular.module(_SERVICES_).factory('Storage', function($rootScope) {
+angular.module(_SERVICES_).factory('Storage', ['$rootScope', function($rootScope) {
    var storage = new MyStorage();
 
     return {
         set : function(obj, done){
             storage.set(obj, function(result){
-                done && done(null, result);
+                $rootScope.safeApply(function(){
+                    done && done(null, result);
+                });
             });
         },
 
@@ -24,7 +26,7 @@ angular.module(_SERVICES_).factory('Storage', function($rootScope) {
             });
         }
     }
-});
+}]);
 
 
 function MyStorage(params) {

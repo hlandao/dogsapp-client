@@ -1,4 +1,4 @@
-angular.module(_SERVICES_).factory('Account', function($http, Storage, $q, $log, User) {
+angular.module(_SERVICES_).factory('Account', ['$http', 'Storage', '$q', '$log', 'User' ,function($http, Storage, $q, $log, User) {
     var storageKey = 'account',
         initDefer = $q.defer(),
         account = {},
@@ -219,4 +219,4 @@ angular.module(_SERVICES_).factory('Account', function($http, Storage, $q, $log,
             return account;
         }
     }
-});
+}]);

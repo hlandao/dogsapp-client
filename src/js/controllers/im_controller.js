@@ -1,5 +1,5 @@
-angular.module(_CONTROLLERS_).controller('IMController', function($scope, Account, $location, geolocation, $timeout) {
-    $scope.userToChat = $scope.userToChat || $scope.popups.user;
+angular.module(_CONTROLLERS_).controller('IMController', ['$scope', 'Account', '$location', 'geolocation', '$timeout', function($scope, Account, $location, geolocation, $timeout) {
+    $scope.userToChat = $scope.userToChat || $scope.userPopup;
 
     if(!$scope.userToChat){
         return $scope.error = "Not available."
@@ -24,4 +24,4 @@ angular.module(_CONTROLLERS_).controller('IMController', function($scope, Accoun
             }
         });
     };
-});
+}]);

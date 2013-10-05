@@ -21,7 +21,23 @@ angular.module(_APP_).config([
 
     } ];
 
-    // Define routes here.
+
+      var deviceReadyResolve =  [ 'phonegapReady', '$q', function(phonegapReady, $q) {
+          var defer = $q.defer();
+
+          var a = phonegapReady(function(){
+              console.log('resovled!');
+              defer.resolve();
+          });
+
+          a();
+
+          return defer.promise;
+
+      } ];
+
+
+      // Define routes here.
     $routeProvider
     .when('/', {
     templateUrl: 'html/partials/home/home.html',
