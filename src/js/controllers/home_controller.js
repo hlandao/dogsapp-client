@@ -11,7 +11,7 @@ angular.module(_CONTROLLERS_).controller('HomeController', ['$scope', 'Account',
 
     $scope.createAccount = function(e){
         var a = $scope.newAccount;
-        if(!a.email || !a.password || !a.name || !a.dog || !a.dog.name){
+        if(!a.email || !a.password || !a.dog || !a.dog.name){
             console.error('error validating details');
             $scope.error = "Please fill in all the details";
             return;
@@ -41,7 +41,6 @@ angular.module(_CONTROLLERS_).controller('HomeController', ['$scope', 'Account',
 
 
     $scope.takePicture = function(){
-        console.log('takePicture');
         var dt = 0; // DATA_URL
         $scope.newAccount.base64Image = null;
         $scope.newAccountDogThumbnail = null;

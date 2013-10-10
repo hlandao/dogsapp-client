@@ -177,11 +177,12 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
     };
 
 
-
+    var notificationsRaw;
     var processNotifications = function(notifications){
+        notificationsRaw = notifications;
         if(notifications && notifications.length){
             $scope.notifications = _.groupBy(notifications, function(noti){
-               return noti.from;
+               return noti.from._id;
             });
 
             $scope.notificationsCount = objectSize($scope.notifications);
@@ -344,6 +345,11 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
         $scope.popups.notifications = !$scope.popups.notifications;
         if($scope.popups.notifications){
             $scope.popups.user = null;
+            Account.reportNotifications(notificationsRaw, function(err){
+                if(!err){
+                    $scope.notificationsCount = 0;
+                }
+            });
         }
     };
 

@@ -10,7 +10,8 @@ angular.module(_SERVICES_).factory('Account', ['$http', 'Storage', '$q', '$log',
         aroundMeUrl =  baseAccountUrl + '/around_me',
         sendIMUrl =  baseAccountUrl + '/send_im',
         chatHistoryUrl = baseAccountUrl + '/chat_history',
-        inboxUrl =  baseAccountUrl + '/inbox';
+        inboxUrl =  baseAccountUrl + '/inbox',
+        notificationsReportUrl =  baseAccountUrl + '/report_notifications';
 
 
 
@@ -194,8 +195,19 @@ angular.module(_SERVICES_).factory('Account', ['$http', 'Storage', '$q', '$log',
     };
 
 
-
-
+    /**
+     * Report to the server that the user was notified about these messages
+     * @param notifications
+     */
+    var reportNotifications = function(notifications, done){
+        var ids = _.pluck(notifications, '_id');
+        $http.post(notificationsReportUrl, {ids : ids}).success(function(response){
+            done && done(null, response);
+        }).error(function(err){
+                console.error(err);
+                done && done(err);
+        });
+    };
 
     init();
 
@@ -210,6 +222,7 @@ angular.module(_SERVICES_).factory('Account', ['$http', 'Storage', '$q', '$log',
         sendIM : sendIM,
         chatHistory : chatHistory,
         inbox : inbox,
+        reportNotifications : reportNotifications,
         account : function(){
             return account;
         }
