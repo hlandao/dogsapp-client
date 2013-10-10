@@ -1,39 +1,12 @@
-<div class="topcoat-navigation-bar">
-    <div class="topcoat-navigation-bar__item center full">
-        <h1 class="topcoat-navigation-bar__title">DogsApp</h1>
-    </div>
-</div>
-<div class="content">
+<div class="content home-screen">
     <div class="area">
-        <header>
-            <h2 class="title">Create Account</h2>
-        </header>
+        <div style="position: absolute; text-align: center;color:white;width:100%;top:40px;font-size:60px;font-weight: bold;text-shadow: 0px 1px 3px rgba(0,0,0,0.6)">
+            <strong>pele</strong>dog
+        </div>
         <section class="centerized">
-            <input type="text" class="topcoat-text-input" placeholder="Email" value="" ng-model="newAccount.email">
-            <br>
-            <br>
-            <input type="password" class="topcoat-text-input" placeholder="Password" value=""  ng-model="newAccount.password">
-            <br>
-            <br>
-            <input type="text" class="topcoat-text-input" placeholder="Your Name"  ng-model="newAccount.name">
-            <br>
-            <br>
-            <input type="text" class="topcoat-text-input" placeholder="Dog Name"  ng-model="newAccount.dog.name">
-            <br>
-            <br>
-            <button class="topcoat-button" ng-click="takePicture()">Choose Dog Picture</button>
-            <br>
-            <img ng-show="newAccountDogThumbnail" ng-src="{{newAccountDogThumbnail}}" class="dog-thumbnail">
-            <img ng-show="!newAccountDogThumbnail" src="img/doggy64.png" class="dog-thumbnail">
-
-            <br>
-            <br>
-            <span class="topcoat-notification" ng-show="error">{{error}}</span>
-            <br>
-            <br>
-            <button class="topcoat-button--cta" ng-click="createAccount($event)">Create Account</button>
-            <br>
-            <a href="#/login">Already have an account ? Click here</a>
+            <button class="topcoat-button--cta" ng-click="switchTo('signup')">Signup</button>
+            <button class="topcoat-button--cta" ng-click="switchTo('login')">Login</button>
         </section>
     </div>
 </div>
+

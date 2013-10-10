@@ -1,24 +1,17 @@
-<div class="topcoat-navigation-bar">
-    <div class="topcoat-navigation-bar__item center full">
-        <h1 class="topcoat-navigation-bar__title">DogsApp</h1>
-    </div>
-</div>
-<div class="content">
+<div class="content home-screen">
     <div class="area">
-        <header>
-            <h2 class="title">Login</h2>
-        </header>
         <section class="centerized">
             <input type="text" class="topcoat-text-input" placeholder="Email" value="" ng-model="loginAccount.email">
-            <br>
             <br>
             <input type="password" class="topcoat-text-input" placeholder="Password" value=""  ng-model="loginAccount.password">
             <br>
             <br>
-            <span class="topcoat-notification" ng-show="error">{{error}}</span>
-            <br>
+            <span class="topcoat-notification" ng-show="error" style="margin-bottom: 5px;">{{error}}</span>
             <br>
             <button class="topcoat-button--cta" ng-click="login($event)">Login</button>
+            <button class="topcoat-button--cta" ng-click="switchTo('signup')">Signup</button>
+
         </section>
     </div>
 </div>
+

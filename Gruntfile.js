@@ -162,7 +162,8 @@ module.exports = function(grunt) {
       },
       fonts: {
         files: [
-          { expand: true, cwd: '<%= bowerDir %>/font-awesome/font/', src: ['**'], dest: '<%= appDir %>/font/' }
+          { expand: true, cwd: '<%= bowerDir %>/font-awesome/font/', src: ['**'], dest: '<%= appDir %>/font/' },
+          { expand: true, cwd: '<%= bowerDir %>/topcoat/font/', src: ['**'], dest: '<%= appDir %>/font/' }
         ]
       },
       tmp_to_build: {

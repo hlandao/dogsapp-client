@@ -26,8 +26,24 @@ angular.module(_SERVICES_).factory('User', ['Storage', '$q', '$log','$rootScope'
      * @param _account
      * @param done
      */
+    var reset = function(done){
+        user = null;
+        store(function(){
+            $rootScope.safeApply(function(){
+                done && done();
+            });
+
+        });
+    };
+
+
+    /**
+     * set and store user  (usually after server response of login/sign up)
+     * @param _account
+     * @param done
+     */
     var set = function(_user, done){
-        user = _user;
+        user = _user || user;
         store(function(){
             $rootScope.safeApply(function(){
                 done && done();
@@ -54,6 +70,7 @@ angular.module(_SERVICES_).factory('User', ['Storage', '$q', '$log','$rootScope'
     return {
         init : init,
         initDefer : initDefer,
+        reset : reset,
         set : set,
         user : function(){
             return user;

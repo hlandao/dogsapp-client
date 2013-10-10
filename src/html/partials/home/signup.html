@@ -1,0 +1,24 @@
+<div class="content home-screen">
+    <div class="area">
+        <section class="centerized">
+            <input type="text" class="topcoat-text-input" placeholder="Email" value="" ng-model="newAccount.email">
+            <br>
+            <input type="password" class="topcoat-text-input" placeholder="Password" value=""  ng-model="newAccount.password">
+            <br>
+            <input type="text" class="topcoat-text-input" placeholder="Dog Name"  ng-model="newAccount.dog.name">
+            <br>
+            <img ng-show="newAccountDogThumbnail" ng-src="{{newAccountDogThumbnail}}" class="dog-thumbnail">
+            <div ng-show="!newAccountDogThumbnail">
+                <img  src="img/doggy64.png" class="dog-thumbnail" ng-click="takePicture()">
+                <br>
+                <h3 style="color:white;font-weight: bold;margin-top:6px;text-shadow: 0px 1px 2px rgba(0,0,0,0.7)"> Click to add <strong ng-show="!newAccount.dog.name">your dog's</strong><strong ng-show="newAccount.dog.name">{{newAccount.dog.name}}</strong> picture</h3>
+            </div>
+            <br>
+            <span class="topcoat-notification" ng-show="error"  style="margin-bottom: 5px;">{{error}}</span>
+            <br>
+            <button class="topcoat-button--cta" ng-click="createAccount($event)">Signup</button>
+            <button class="topcoat-button--cta" ng-click="switchTo('login')">Login</button>
+
+        </section>
+    </div>
+</div>

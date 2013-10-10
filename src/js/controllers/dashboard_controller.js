@@ -1,10 +1,12 @@
 
 
 
-angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Account', '$location', 'geolocation', '$timeout', function($scope, Account, $location, geolocation, $timeout) {
+angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Account', '$location', 'geolocation', '$timeout', 'User', function($scope, Account, $location, geolocation, $timeout, User) {
     var _account = Account.account();
-    var updateLocationTimeout;
+    var updateMarkerLocationTimeout;
+    var updatePingTimeout
     var isCentered;
+    var user;
 
     $scope.popups = {
         notifications : false,
@@ -46,6 +48,10 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
 
     var getLocation = function(options, done){
         geolocation.getCurrentPosition( function GCPSuccess(locationData){
+            if(locationData && locationData.coords){
+                user.locationData = locationData;
+                User.set();
+            }
             done(null, locationData);
         }, function GCPError(err){
             console.error(err);
@@ -74,13 +80,12 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
      * we always want to transmit our position to the server
      */
     var init = function(){
+
         if(!_account.user){
             $location.path('/');
         }
 
-        getLocation(null, function(err, locationData){
-            centerMe(locationData.coords);
-        });
+        user = User.user();
 
     };
 
@@ -88,13 +93,14 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
     /**
      * center the map to the user location
      */
-    var centerMe = function(coords){
+    var centerMe = function(coords, zoom){
         isCentered = true;
-        angular.extend($scope.center, {
+        var newCenter = {
             lat: coords.latitude,
-            lng: coords.longitude,
-            zoom: 16
-        });
+            lng: coords.longitude
+        };
+        if(zoom) newCenter.zoom = zoom;
+        angular.extend($scope.center, newCenter);
 
         updateMyMarkerInTheMap(coords);
 
@@ -116,17 +122,12 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
 
 
     /**
-     * updates user location and initiates a peridoed location update
+     * send user location to the server and initiates a periodic location update
      */
 
-    var updateLocation = function(timeout){
+    var pingLocation = function(timeout){
         getLocation(null, function(err, locationData){
-
-            // if map is centered, update the center
-            if(isCentered) centerMe(locationData.coords);
-            // if not, just update my cursor
-            else updateMyMarkerInTheMap(locationData.coords);
-
+            if(err) return;
             Account.updateLocation(locationData.coords, function(err, response){
                 if(response && response.aroundMe) updateUsersAroundMe(response.aroundMe);
                 if(response) processNotifications(response.notifications);
@@ -134,11 +135,47 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
         });
 
         if(timeout){
-            updateLocationTimeout = $timeout(function(){
-                updateLocation(timeout);
+            updatePingTimeout = $timeout(function(){
+                pingLocation(timeout);
             }, timeout);
         }
     };
+
+
+    /**
+     * update user marker in the map
+     */
+
+    var updateMarkerLocation = function(timeout){
+        getLocation(null, function(err, locationData){
+           if(err){
+               if(err.code === "TIMEOUT"){
+                   $scope.runtime.alert="Cannot determine location.";
+                   $scope.runtime.alertCallback=function(){
+                       updateMarkerLocation();
+                   };
+               }else if(err.code === "POSITION_UNAVAILABLE"){
+                   $scope.runtime.alert="Please enable your GPS.";
+                   $scope.runtime.alertCallback=function(){
+                       updateMarkerLocation();
+                   };
+               }
+               return;
+           }
+            // if map is centered, update the center
+            if(isCentered) centerMe(locationData.coords);
+            // if not, just update my cursor
+            else updateMyMarkerInTheMap(locationData.coords);
+
+        });
+
+        if(timeout){
+            updateMarkerLocationTimeout = $timeout(function(){
+                updateMarkerLocation(timeout);
+            }, timeout);
+        }
+    };
+
 
 
     var processNotifications = function(notifications){
@@ -166,6 +203,7 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
 
     var updateUsersAroundMe = function(usersAroundMe){
         //
+        $scope.runtime.aroundMe =  usersAroundMe;
         angular.forEach(usersAroundMe, function(user){
             $scope.markers[user._id] = $scope.markers[user._id] || {};
             angular.extend($scope.markers[user._id], {
@@ -225,7 +263,51 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
      * initiates the map view
      */
     $scope.initMapView = function(){
+        $scope.runtime.alert = null;
+        $scope.runtime.alertCallback=null;
+
         $scope.uiState = "map";
+        init();
+        updateMarkerLocation(500);
+
+        $scope.runtime.showLoader = true;
+
+        if(user && user.locationData && user.locationData.coords){
+
+            centerMe(user.locationData.coords, 16);
+            $scope.runtime.showLoader = false;
+
+            if($scope.runtime.aroundMe) updateUsersAroundMe($scope.runtime.aroundMe);
+
+        }else{
+
+            $scope.runtime.showLoader = true;
+            getLocation(null, function(err, locationData){
+
+                $scope.runtime.showLoader = false;
+
+                if(err){
+
+                    if(err.code === "TIMEOUT"){
+                        $scope.runtime.alert="Cannot determine location.";
+                    }else if(err.code === "POSITION_UNAVAILABLE"){
+                        $scope.runtime.alert="Please enable your GPS.";
+                    }else{
+                        $scope.runtime.alert=err.message;
+                    }
+
+                    return;
+                }
+
+
+                $scope.runtime.alert = null;
+                $scope.runtime.alertCallback=null;
+
+
+                centerMe(locationData.coords, 16);
+            });
+        }
+
     };
 
 
@@ -233,8 +315,17 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
      * initiates the inbox view
      */
     $scope.initInboxView = function(){
+        $scope.runtime.alert = null;
+        $scope.runtime.alertCallback=null;
+
         $scope.uiState = "inbox";
+        init();
+
+        if($scope.runtime.inbox) $scope.inbox = $scope.runtime.inbox;
+        else  $scope.runtime.showLoader = true;
         Account.inbox(function(err, inbox){
+            $scope.runtime.showLoader = false;
+            $scope.runtime.inbox = inbox;
             if(err){
                 $scope.error = "Cannot get inbox";
             }else{
@@ -244,15 +335,6 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
     };
 
 
-    /**
-     * switch to view instead of using a-href tag
-     * @param view
-     */
-    $scope.switchTo = function(view){
-      var path = $location.path();
-      if(path && path.indexOf(view) > -1) return;
-        $location.path(view);
-    };
 
 
     /**
@@ -265,7 +347,6 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
         }
     };
 
-    init();
-    updateLocation(10000);
+    pingLocation(10000);
 
 }]);

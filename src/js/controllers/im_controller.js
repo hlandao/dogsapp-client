@@ -21,6 +21,7 @@ angular.module(_CONTROLLERS_).controller('IMController', ['$scope', 'Account', '
                 $scope.error = "Cannot send message please try again";
             }else{
                 $scope.history.push(_message);
+                $scope.$emit('scrollBottom');
             }
         });
     };

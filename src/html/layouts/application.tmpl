@@ -38,6 +38,14 @@
       ng-view></div>
   </div>
 
+  <div id="loader" ng-show="runtime.showLoader">
+      <img src="./img/loader.gif">
+  </div>
+
+  <div id="alert" ng-show="runtime.alert" ng-click="dismissAlert()">
+      <span class="topcoat-notification">{{runtime.alert}}</span>
+  </div>
+
   <script type="text/javascript">
     pg.initialize();
   </script>

@@ -65,19 +65,14 @@ angular.module(_SERVICES_).factory('Account', ['$http', 'Storage', '$q', '$log',
      * @param done
      */
     var logout = function (done){
-            $http.get(logoutUrl).success(function(data){
-                return User.set(null, function(err){
-                    if(err){
-                        done && done({error : 'could not save user account'});
-                    }else{
-                        account.user = null;
-                        done && done(null);
-                    }
-                });
-            }).error(function(err){
-                    $log.debug('[Account] failed to logout', err);
-                    done && done(err);
-            });
+        return User.reset(function(err){
+            if(err){
+                done && done({error : 'could not save user account'});
+            }else{
+                account.user = null;
+                done && done(null);
+            }
+        });
     };
 
 

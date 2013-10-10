@@ -26,7 +26,7 @@ var pg = {
   onDeviceReady: function() {
 
     var _this = this;
-
+    navigator && navigator.splashscreen && navigator.splashscreen.hide();
     angular.element(document).ready(function(){
       angular.bootstrap(document, [_APP_]);
     });

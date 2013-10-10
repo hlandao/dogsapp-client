@@ -39,8 +39,16 @@ angular.module(_APP_).config([
 
       // Define routes here.
     $routeProvider
-    .when('/', {
-    templateUrl: 'html/partials/home/home.html',
+    .when('/home', {
+        templateUrl: 'html/partials/home/home.html',
+        controller: 'HomeController',
+        resolve : {
+            account : accountResolve
+        }
+    })
+
+    .when('/signup', {
+    templateUrl: 'html/partials/home/signup.html',
     controller: 'HomeController',
     resolve : {
         account : accountResolve
@@ -69,7 +77,7 @@ angular.module(_APP_).config([
     })
 
 
-        .otherwise({ redirectTo: '/' });
+        .otherwise({ redirectTo: '/home' });
 
   }
 ]).config(['$httpProvider', function($httpProvider){

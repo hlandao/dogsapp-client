@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="chat">
-        <div class="messages-wrapper">
+        <div class="messages-wrapper" scroll-bottom>
             <div ng-repeat="message in history" class="message" ng-class="{'mine' : (userToChat._id === message.to), 'his' : (userToChat._id === message.from)}">
                 <span>{{message.message}}</span>
             </div>
