@@ -1,11 +1,10 @@
 <div class="inner"  ng-controller="IMController" >
-    <div class="dog-header">
+    <div class="dog-header" ng-click="closeUserPopup()">
         <div class="dog-thumbnail-wrapper">
             <img ng-src="{{userPopup.dog.thumbnail}}">
         </div>
         <div class="dog-name">
             {{userPopup.dog.name}}
-            <small ng-show="userPopup.name"> ({{userPopup.name}})</small>
         </div>
     </div>
     <div class="chat">
