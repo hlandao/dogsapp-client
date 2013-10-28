@@ -47,6 +47,7 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
     });
 
     var getLocation = function(options, done){
+        console.log('getLocation');
         geolocation.getCurrentPosition( function GCPSuccess(locationData){
             if(locationData && locationData.coords){
                 user.locationData = locationData;
@@ -54,7 +55,7 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
             }
             done(null, locationData);
         }, function GCPError(err){
-            console.error(err);
+            console.error('error getting location data',err);
             done(err);
         }, options);
     };
@@ -264,15 +265,19 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
      * initiates the map view
      */
     $scope.initMapView = function(){
+        console.log('initMapView');
+
         $scope.runtime.alert = null;
         $scope.runtime.alertCallback=null;
+
+        $scope.popups.notifications = false;
+        $scope.popups.user = false;
 
         $scope.uiState = "map";
         init();
         updateMarkerLocation(500);
 
         $scope.runtime.showLoader = true;
-
         if(user && user.locationData && user.locationData.coords){
 
             centerMe(user.locationData.coords, 16);
@@ -319,6 +324,9 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
         $scope.runtime.alert = null;
         $scope.runtime.alertCallback=null;
 
+        $scope.popups.notifications = false;
+        $scope.popups.user = false;
+
         $scope.uiState = "inbox";
         init();
 
@@ -353,6 +361,15 @@ angular.module(_CONTROLLERS_).controller('DashboardController', ['$scope', 'Acco
         }
     };
 
-    pingLocation(10000);
+
+    /**
+     * switch runtime state
+     * @param view
+     */
+    $scope.switchState = function(state){
+        $scope.runtime.state = state;
+    };
+
+    pingLocation(5000);
 
 }]);

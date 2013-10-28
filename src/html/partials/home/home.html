@@ -1,26 +1,38 @@
-<div class="content home-screen">
-    <div class="area centerized">
-        <div style="text-align: center;color:white;width:100%;height:75px;padding-top:30px;font-size:30px;font-weight: bold;text-shadow: 0px 1px 3px rgba(0,0,0,0.6)">
-            Create<br>your dog's profile
-        </div>
-        <section class="centerized" ng-if="!newAccountDogThumbnail">
-            <button class="topcoat-button--cta" ng-click="takePicture()">Take a picture</button>
-            <br>
-            <br>
-            <button class="topcoat-button--cta" ng-click="takePicture(true)">Choose from gallery</button>
-        </section>
-        <section class="centerized" ng-if="newAccountDogThumbnail">
-            <form ng-submit="createAccount()" class="centerized">
-                <div class="dog-thumbnail" style="background-image:url({{newAccountDogThumbnail}});"></div>
-                <input type="text" class="no-bg" ng-model="newAccount.dog.name" placeholder="Dog's name">
-                <br>
-                 <div><span class="topcoat-notification" ng-show="error"  style="margin-bottom: 5px;">{{error}}</span></div>
-                <br>
-                <button class="topcoat-button--cta" type="submit">Start playing</button>
-            </form>
-
-        </section>
-
+<div class="screen home-screen" ng-class="{blurred : showOverlay}" ng-show="state === 'welcome'">
+    <h1>
+        WELCOME
+    </h1>
+    <div class="start-button-wrapper">
+        <p> To get started, please select <br> a photo of your dog </p>
+        <button class="hbtn" ng-click="showOverlay=true"> Start </button>
     </div>
 </div>
+
+
+
+<div class="screen home-screen home-screen2 animated" ng-class="{blurred : showOverlay}" ng-show="state === 'finish'" ng-animate="{show : bounceInDown}">
+    <form ng-submit="createAccount()">
+
+    <h1>
+        Create you dog's profile
+    </h1>
+
+    <div class="dog-thumbnail" style="background-image : url('{{newAccountDogThumbnail}}')" ng-click="showOverlay=true"></div>
+        <input type="text" placeholder="Dog Name" maxlength="20" ng-model="newAccount.dog.name">
+
+        <div class="start-button-wrapper">
+            <button class="hbtn" type="submit"> Finish & Start Playing </button>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+<div class="overlay open" ng-if="showOverlay" ng-animate="">
+    <button class="hbtn" ng-click="takePicture()"> Take a photo </button>
+    <button class="hbtn"  ng-click="takePicture(true)"> Select form Gallery </button>
+</div>
+
 

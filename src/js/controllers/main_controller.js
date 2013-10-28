@@ -24,4 +24,7 @@ angular.module(_CONTROLLERS_).controller('MainController', ['$scope', 'Account',
         $location.path(view);
     };
 
+
+
+
 }]);

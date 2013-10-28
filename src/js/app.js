@@ -29,7 +29,8 @@ angular.module(_APP_, [
   'ngRoute',
   'btford.phonegap.geolocation',
   'btford.phonegap.ready',
-  'leaflet-directive'
+  'leaflet-directive',
+  'ngAnimate',
 
 
 ]);

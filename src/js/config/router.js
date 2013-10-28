@@ -68,13 +68,6 @@ angular.module(_APP_).config([
             account : accountResolve
         }
     })
-    .when('/inbox', {
-        templateUrl: 'html/partials/dashboard/inbox.html',
-        controller: 'DashboardController',
-        resolve : {
-            account : accountResolve
-        }
-    })
 
 
         .otherwise({ redirectTo: '/home' });

@@ -11,6 +11,7 @@
     "topcoat": "~0.7.5",
     "angular-phonegap-geolocation": "~0.0.1",
     "angular-phonegap-ready": "~0.0.1",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "angular-animate": "~1.2.0-rc.2"
   }
 }

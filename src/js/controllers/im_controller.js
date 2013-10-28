@@ -5,13 +5,22 @@ angular.module(_CONTROLLERS_).controller('IMController', ['$scope', 'Account', '
         return $scope.error = "Not available."
     }
 
-    Account.chatHistory($scope.userToChat._id, function(err, history){
-       if(err){
-           $scope.error = "Cannot get chat history";
-       }else{
-           $scope.history = history;
-       }
-    });
+
+    var getChatHistory = function(timeout){
+        Account.chatHistory($scope.userToChat._id, function(err, history){
+            if(err){
+                $scope.error = "Cannot get chat history";
+            }else{
+                $scope.history = history;
+            }
+        });
+
+        if(timeout){
+            $timeout(function(){
+                getChatHistory(timeout);
+            }, timeout);
+        }
+    };
 
     $scope.sendIM = function(message){
         if(!message) return;
@@ -25,4 +34,8 @@ angular.module(_CONTROLLERS_).controller('IMController', ['$scope', 'Account', '
             }
         });
     };
+
+    getChatHistory(2000);
+
+
 }]);

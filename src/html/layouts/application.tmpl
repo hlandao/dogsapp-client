@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="img/favicon.png">
 
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 
     <% if (env == 'development') {
      css.forEach(function(asset) {
@@ -19,7 +19,6 @@
    } %>
 
   <script src="phonegap.js"></script>
-   <script src="http://debug.phonegap.com/target/target-script-min.js#hadar_avd_0"></script>
 <% if (env == 'development') {
   print('  <script src="js/config/development.js"></script>');
      js.forEach(function(asset){
@@ -32,19 +31,7 @@
 </head>
 <body ng-controller="MainController">
 
-  <div id="container" class="container">
-    <div
-      id="wrapper"
-      ng-view></div>
-  </div>
-
-  <div id="loader" ng-show="runtime.showLoader">
-      <img src="./img/loader.gif">
-  </div>
-
-  <div id="alert" ng-show="runtime.alert" ng-click="dismissAlert()">
-      <span class="topcoat-notification">{{runtime.alert}}</span>
-  </div>
+    <div id="wrapper" ng-view class="my-slide-animation"></div>
 
   <script type="text/javascript">
     pg.initialize();

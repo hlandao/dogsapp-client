@@ -1,10 +1,14 @@
 <div class="topcoat-tab-bar full">
     <label class="topcoat-tab-bar__item">
-        <input type="radio" name="topcoat" ng-model="uiState" value="map"  ng-click="switchTo('dashboard')">
+        <input type="radio" name="topcoat" ng-model="uiState" value="map"  ng-click="switchState('map')">
         <button class="topcoat-tab-bar__button full">Map</button>
     </label>
     <label class="topcoat-tab-bar__item">
-        <input type="radio" name="topcoat" ng-model="uiState" value="inbox" ng-click="switchTo('inbox')">
+        <input type="radio" name="topcoat" ng-model="uiState" value="inbox" ng-click="switchState('inbox')">
         <button class="topcoat-tab-bar__button full">Inbox</button>
+    </label>
+    <label class="topcoat-tab-bar__item">
+        <input type="radio" name="topcoat" ng-model="uiState" value="logout" ng-click="logout()">
+        <button class="topcoat-tab-bar__button full">Logout</button>
     </label>
 </div>

@@ -1,8 +1,7 @@
 <div class="inner"  ng-controller="IMController" >
-    <div class="dog-header" ng-click="closeUserPopup()">
-        <div class="dog-thumbnail-wrapper">
-            <img ng-src="{{userPopup.dog.thumbnail}}">
-        </div>
+    <div class="dog-header">
+        <div class="dog-thumbnail" style="background-image : url('{{userPopup.dog.thumbnail}}')" ng-click="closeUserPopup()"></div>
+
         <div class="dog-name">
             {{userPopup.dog.name}}
         </div>

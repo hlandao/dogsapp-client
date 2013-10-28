@@ -29,6 +29,7 @@ module.exports = function(grunt) {
           //'<%= bowerDir %>/font-awesome/css/font-awesome.css',
           '<%= bowerDir %>/topcoat/css/topcoat-mobile-light.css'
 
+
         ],
         // shouldn't need to touch this
         src: [
@@ -46,7 +47,9 @@ module.exports = function(grunt) {
           '<%= bowerDir %>/angular-phonegap-geolocation/geolocation.js',
           '<%= bowerDir %>/angular-phonegap-ready/ready.js',
           '<%= bowerDir %>/angular-leaflet/src/angular-leaflet-directive.js',
-          '<%= bowerDir %>/underscore/underscore.js'
+          '<%= bowerDir %>/underscore/underscore.js',
+          '<%= bowerDir %>/angular-animate/angular-animate.js'
+
 
 
 //          '<%= bowerDir %>/angular-google-maps/src/angular-google-maps.js'
@@ -163,7 +166,8 @@ module.exports = function(grunt) {
       fonts: {
         files: [
           { expand: true, cwd: '<%= bowerDir %>/font-awesome/font/', src: ['**'], dest: '<%= appDir %>/font/' },
-          { expand: true, cwd: '<%= bowerDir %>/topcoat/font/', src: ['**'], dest: '<%= appDir %>/font/' }
+          //{ expand: true, cwd: '<%= bowerDir %>/topcoat/font/', src: ['**'], dest: '<%= appDir %>/font/' },
+          { expand: true, cwd: '<%= srcDir %>/font', src: ['HelveticaNeue-UltraLight.otf'], dest: '<%= appDir %>/font/' }
         ]
       },
       tmp_to_build: {
